@@ -1,0 +1,43 @@
+<div class="row" style="height: 800vh; padding-top: 100px;">
+    <div class="col-md-4 offset-4">
+        <h1>Ro'yhatdan o'tish</h1>
+            <div class="mb-3">
+                <label class="form-label">Name </label>
+                <input type="text" class="form-control" id="name">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Email </label>
+                <input type="email" class="form-control" id="email">
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password">
+            </div>
+            
+            <button type="button ", onclick="register()" class="btn btn-primary  bg-dark">Kirish</button>
+    </div>
+</div>
+
+<script src="/axios.min.js"></script>
+<script>
+    function register(){
+        const name = document.getElementById('name').value
+        const email = document.getElementById('email').value
+        const password = document.getElementById('password').value
+        if(email == "" || password == "") {
+            alert("Error auth")
+        }else {
+            axios({
+                url: "/api/user/create",
+                method: "POST",
+                data: {
+                    name: name,
+                    email: email,
+                    password: password,
+                }
+            }).then((res) => {
+                window.location.replace('/')
+            })
+        }
+    }
+</script>

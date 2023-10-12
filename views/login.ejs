@@ -1,0 +1,44 @@
+<div class="row" style="height: 800vh; padding-top: 100px;">
+    <div class="col-md-4 offset-4">
+        <h1>Profilga kirish</h1>
+        <form>
+            <div class="mb-3">
+                <label class="form-label">Email </label>
+                <input type="email" class="form-control" id="email">
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password">
+            </div>
+            <button type="button" class="btn btn-primary bg-dark " onclick="login()">Kirish</button>
+        </form>
+    </div>
+</div>
+<script src="/axios.min.js"></script>
+<script>
+    function login() {
+        const email = document.getElementById('email').value
+        const password = document.getElementById('password').value
+        if (email == "" || password == "") {
+            alert("Error auth")
+        } else {
+            axios({
+                url: "/api/user/login",
+                method: "POST",
+                data: {
+                    email: email,
+                    password: password,
+                }
+            }).then((res) => {
+                const token = res.data.token
+                window.localStorage.setItem("user", token)
+                window.localStorage.setItem("oson", "QZqIMDOm1ax66g5OIdg19ztSnMRZ2jDI8TgKmUWdUk9Qp3uX")
+                window.location.replace('/profile')
+            })
+        }
+    }
+</script>
+
+
+
+

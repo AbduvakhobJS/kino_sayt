@@ -1,0 +1,92 @@
+<button type="button" class="btn btn-primary m-5 bg-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    Balansni to'ldirish
+</button>
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Soqqani qil</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Summani kriting</label>
+                    <input type="number" class="form-control" id="summa">
+                </div>
+                <button type="button" onclick="payme()" class="btn btn-primary bg-dark" data-bs-toggle="modal"
+                    data-bs-target="#exampleModal">
+                    To'lash
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-10 offset-1">
+        <h4>Username: <span id="user_name"> </span> </h4>
+        <h4>Email: <span id="user_email"> </span> </h4>
+        <h4>UUID: <span id="user_uuid"> </span> </h4>
+        <h4>Balance: <span id="user_balance"> </span> </h4>
+    </div>
+</div>
+
+
+<script src="/axios.min.js"></script>
+<script>
+    const user = window.localStorage.getItem("user")
+    const oson = window.localStorage.getItem("oson")
+    function payme() {
+        axios({
+            url: "/api/user/decode",
+            method: "GET",
+            headers: {
+                "Authorization": user,
+                "token": oson
+            },
+        }).then((res) => {
+            const data = res.data.data
+            if (!data || data == "" || data == undefined) {
+                console.log("111    ")
+            }
+        })
+    }
+    if (!user) {
+        console.log("ok")
+    } else {
+        axios({
+            url: "/api/user/decode",
+            method: "GET",
+            headers: {
+                "Authorization": user
+            },
+        }).then((res) => {
+            const data = res.data.data
+            document.getElementById('user_name').innerHTML = data.NAME
+            document.getElementById('user_email').innerHTML = data.EMAIL
+            document.getElementById('user_uuid').innerHTML = data.UUID
+            document.getElementById('user_balance').innerHTML = data.BALANCE
+            document.getElementById('user_name').style.color = "RED"
+            document.getElementById('user_email').style.color = "RED"
+            document.getElementById('user_uuid').style.color = "RED"
+            document.getElementById('user_balance').style.color = "RED"
+        })
+    }
+</script>
+Footer
+© 2022 GitHub, Inc.
+Footer navigation
+Terms
+Privacy
+Security
+Status
+Docs
+Contact GitHub
+Pricing
+API
+Training
+Blog
+About
